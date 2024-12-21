@@ -1,146 +1,93 @@
-# 📚 Hot Rolled Steel Analysis Repository
+# Food Packaging and Distribution
 
----
+A food packaging and distribution company, due to market conditions, diverse sales, and high sales volume, required dynamic and diverse reports. Generally, the production and sales process in this industry operated as follows: raw materials entered the system, underwent packaging, and the packaged products were delivered to customers. A customer placed an order for a specific number of packages (a package refers to a bundled group of items in the facility); however, sales occurred by weight, and the cost was calculated per kilogram. Each package corresponded to a certain weight but was not fully utilized during the production process. The weight of the final product was less than the ordered weight. Therefore, the difference between the package weight and the sales weight indicated the amount of waste.
 
-## 🌟 Welcome to the Repository
+Initially, after importing the required libraries, an overview of the dataframe was necessary. Since the Excel file included two separate sheets, both sheets were read and stored in two separate variables. The names of these sheets were **Transaction** and **Customer**. Finally, the **Dimdate** file was read and stored as well.
 
-This repository provides a detailed analysis framework for understanding and optimizing the processes involved in the hot rolling steel industry. It includes data handling, insights extraction, and advanced analytics for sales, waste management, and customer behavior.
+The **Transaction** table had 13 columns as described below:
 
----
+| Column Name       | Description                                                   |
+|-------------------|---------------------------------------------------------------|
+| Transaction_ID    | Transaction identifier                                       |
+| Product_ID        | Product identifier                                           |
+| Export            | Indicates whether the product was for export or domestic consumption |
+| Industry          | Specifies the type of customer industry                      |
+| City_Category     | Location category relative to the province of the customer's head office |
+| Stay_In_Customer  | Number of days the customer's order stayed at the facility   |
+| Material_Status   | Indicates whether the customer's product was supplied from inventory or was in production |
+| Payment           | Order payment amount in rials                                |
+| Unit_Price        | Price per kilogram of the product in rials                   |
+| Save_Date_Time    | Order registration time in the Persian calendar              |
+| Send_Date         | Shipping date in the Gregorian calendar                      |
+| Customer_ID       | Customer code                                                |
+| Bandel            | Number of packages (each package equals 2 ± 0.05 tons; 2 tons were used in calculations) |
+| Real_Weight       | Actual weight sold                                           |
 
-## 📂 Dataset Information
+The **Customers** sheet contained six columns as described below:
 
-You can download the datasets for this exercise from:
-- [Steel Dataset](https://docs.google.com/spreadsheets/d/1WHi8Btw9YCuF0vbkBgphPoWb1rmxyZkA/edit?usp=drive_link)
-- [Dimdate Dataset](https://docs.google.com/spreadsheets/d/1MdzmRdPKIAZMPu3XlnognXFPf8t6_XPa/edit?usp=drive_link)
-
----
-
-## 🔍 Overview of Hot Rolled Steel
-
-Hot rolled steel refers to steel that has been rolled at very high temperatures (above 1700°F), exceeding the recrystallization temperature for most types of steel. This process makes it easier to shape the steel, resulting in products with a wider variety of appearances.
-
-A hot rolling steel company, due to market conditions, diverse sales, and high sales volume, requires dynamic and diverse reports. Generally, the production and sales process works as follows:
-- Steel billets enter the system.
-- They undergo rolling.
-- Rolled sections are delivered to customers.
-
-### Key Details:
-- Customers place orders in bundles, but sales are based on tonnage.
-- The cost is calculated per kilogram.
-- Each bundle corresponds to a billet weighing 2 tons, though not fully utilized during production.
-- Waste is the difference between the bundle weight and the sales tonnage.
-
----
-
-## 📊 Data Structure
-
-### **Transaction Table**
-
-| Column Name       | Description                                                    |
-|-------------------|----------------------------------------------------------------|
-| Transaction_ID    | Transaction identifier                                        |
-| Product_ID        | Product identifier                                            |
-| Export            | Indicates export or domestic consumption                      |
-| Industry          | Type of customer industry                                     |
-| City_Category     | Location category relative to customer head office province   |
-| Stay_In_Customer  | Days customer’s order stayed at the factory                  |
-| Material_Status   | Inventory or production supply status                         |
-| Payment           | Order payment amount in rials                                 |
-| Unit_Price        | Price per kilogram in rials                                   |
-| Save_Date_Time    | Order registration time in Persian calendar                   |
-| Send_Date         | Shipping date in Gregorian calendar                           |
-| Customer_ID       | Customer code                                                 |
-| Bandel            | Bundles ordered (each bundle equals 2 ± 0.05 tons)           |
-| Real_Weight       | Actual weight sold                                            |
-
-### **Customer Table**
-
-| Column Name       | Description                                                    |
-|-------------------|----------------------------------------------------------------|
-| Customer_ID       | Customer identifier                                           |
+| Column Name       | Description                                                   |
+|-------------------|---------------------------------------------------------------|
+| Customer_ID       | Transaction identifier                                       |
 | Province          | Name of the province                                         |
-| City_Category     | Location category relative to customer head office province   |
-| Stay_In_Customer  | Days customer’s order stayed at the factory                  |
-| Export/Import     | Indicates export or domestic consumption                      |
-| Industry_Cod      | Industry code                                                 |
+| City_Category     | Location category relative to the province of the customer's head office |
+| Stay_In_Customer  | Number of days the customer's order stayed at the facility   |
+| Export/Import     | Indicates whether the product was for export or domestic consumption |
+| Industry_Cod      | Industry code                                                |
 
-### Industry Code Classification:
-- **0-4**: Construction
-- **5-9**: Machining
-- **10-13**: Riveting
-- **14-17**: Drawing
-- **18-20**: Welding
+In this table, the **Industry_Cod** provided a more detailed classification of industries: - Codes 0 to 4 represented the **retail** industry. - Codes 5 to 9 represented the **wholesale** industry. - Codes 10 to 13 represented the **e-commerce** industry. - Codes 14 to 17 represented the **bulk supply** industry. - Codes 18 to 20 represented the **specialty goods** industry.
 
-### **Dimdate Table**
+The **Dimdate** table was a helper table used to convert Gregorian dates to Persian (Solar Hijri) dates and vice versa. This table included comprehensive calendar information such as: - Day - Month - Year - Month name - Day of the week - Week number of the year, etc., covering the years from 1320 to 1429 in the Persian calendar.
 
-A helper table to convert Gregorian dates to Persian (Solar Hijri) dates and vice versa. It includes:
-- Day, Month, Year
-- Month name, Day of the week
-- Week number of the year
-- Covers years 1320 to 1429 in the Persian calendar.
+Before merging the **Transaction** and **Customer** dataframes, decisions were made regarding each column. In the final dataframe, only the following columns were retained:
 
----
+Transaction_ID
+Export
+Industry
+City_Category
+Payment
+Customer_ID
+Bandel
+Real_Weight
+Province
+Industry_Cod
+Waste
+Year
+Month
+Type
+Class
 
-## 🚀 Data Preprocessing Steps
+A new column for waste was added to the dataframe as described earlier. The column was named exactly **Waste**.
 
-1. **Column Selection**:
-   - Retain these columns in the final dataframe:
-     `Transaction_ID`, `Export`, `Industry`, `City_Category`, `Payment`, `Customer_ID`, `Bandel`, `Real_Weight`, `Province`, `Industry_Cod`, `Waste`, `Year`, `Month`, `Type`, `Class`.
+Additionally, the **Bandel** column was converted to kilograms and stored in the same column.
 
-2. **New Columns**:
-   - Add a column for `Waste`.
-   - Convert `Bandel` to kilograms.
+The **Year** and **Month** columns were converted to the Gregorian format. To calculate these values: - A new column named **Miladi** was added to the dataframe by converting the Persian dates in the **Save_Date_Time** column to their Gregorian equivalents. - The year and month were extracted from the **Miladi** column and stored in the **Year** and **Month** columns, respectively. - Finally, the **Miladi** column was deleted after extraction.
 
-3. **Date Conversion**:
-   - Add a `Miladi` column for Gregorian dates from `Save_Date_Time`.
-   - Extract `Year` and `Month` from `Miladi`, then delete `Miladi`.
+The **Product_ID** column was split into three separate columns using the dot (`.`) as a delimiter: - The first column was named **Type**. - The second column was named **Class**. - The third column was discarded.
 
-4. **Product_ID Split**:
-   - Split `Product_ID` into `Type` and `Class` columns.
+The **Payment** column, which was in rials, was scaled to billions of tomans.
 
-5. **Payment Scaling**:
-   - Convert `Payment` from rials to billions of tomans.
+Now that clean and standardized data was prepared, the following questions were answered:
 
----
+We wanted to determine the sales amount for imports and exports for each year and each month of that year. The **Year** and **Month** columns were set as the index of the dataframe.
 
-## 📌 Analytical Questions
+The top ten customers with the highest purchase volume were identified, including the number of purchases and the total production waste for each. This table was sorted in descending order based on the total sales amount.
 
-1. **Yearly and Monthly Sales**:
-   - Determine sales for imports and exports for each year and month.
-   - Use `Year` and `Month` as dataframe indexes.
+The sales amount, the production waste, and the number of sales for each industry (retail, wholesale, e-commerce, bulk supply, and specialty goods) in each **Type** and **Class** subcategory were determined.
 
-2. **Top Customers**:
-   - Identify the top 10 customers by purchase volume, number of purchases, and total waste.
-   - Sort by total sales in descending order.
+The total purchase amount for each province in each year was calculated. Additionally, the number of purchases and the total production waste for each province were reported.
 
-3. **Industry Insights**:
-   - Analyze sales, waste, and number of sales for each industry (`Machining`, `Welding`, `Construction`, `Riveting`, `Drawing`) by `Type` and `Class`.
+In the industry, packaged goods could be produced either as boxed items or bulk supplies. Boxed goods were produced in discrete packages, while bulk supplies were prepared in larger quantities. The **Type** column indicated the production form: - **B** represented boxed goods. - **L** represented bulk supplies.
 
-4. **Province Analysis**:
-   - Calculate total purchases, number of purchases, and total waste for each province per year.
+The total kilograms of products produced for each **City_Category**, categorized by the **Type** (boxed or bulk) and their respective **Class**, were determined.
 
-5. **Product Form Analysis**:
-   - Determine total kilograms produced for each `City_Category`, categorized by `Type` (straight vs. coil) and `Class`.
+Quartiles were used to divide the data into four parts using three points. These quartiles were referred to as the first quartile, second quartile, and third quartile, commonly denoted as **Q1**, **Q2**, and **Q3**, respectively. To determine quartiles, the data was sorted in ascending order. - **Q1** (the first quartile or lower quartile) was the value below which 25% of the observations fell. - **Q2** (the second quartile) was the median, which split the dataset into two halves, where 50% of the observations were smaller and 50% were larger. - **Q3** (the third quartile or upper quartile) was the value above which 25% of the observations fell and below which 75% of the observations fell.
 
-6. **Quartile Analysis**:
-   - Categorize prices into `Low`, `Med`, and `High` based on quartiles (`Q1`, `Q2`, `Q3`).
-   - Add a `PriceLevel` column.
+The values in the **Price** column were categorized into three groups: - Prices strictly below **Q1** were labeled as **Low**. - Prices between **Q1** and **Q3** (inclusive) were labeled as **Med**. - Prices above **Q3** were labeled as **High**.
 
-7. **Industry Filter**:
-   - Filter data for industries with more than 50,000 sales and store in `Indfilter`.
+These categorizations were stored in a new column called **PriceLevel**.
 
-8. **Waste Analysis**:
-   - Report the average waste for the construction industry in 2020 for purchases with high prices, normalized by bundles.
+A function named **Categorize** was defined and applied to the dataframe using the `apply` method to achieve this.
 
----
+A filter command was used to extract the part of the dataframe related to industrial codes with more than **50,000 sales**. This filtered data was stored in a variable named **Indfilter**.
 
-## 🛠 Contribution
-
-Feel free to fork this repository, suggest improvements, or raise issues. Collaboration is always welcome!
-
----
-
-## 🌟 Acknowledgments
-
-Thank you for exploring this repository. We hope it provides valuable insights and tools for your analysis. Please star ⭐ this project if you find it helpful!
+Finally, the **average waste** for the **retail industry** in the year **2020** for purchases with **High** prices, normalized by the number of packages, was calculated and reported.
