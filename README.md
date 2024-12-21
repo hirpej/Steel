@@ -1,127 +1,146 @@
-# 📚 Answer Generator Repository
-
-<h1 align="center" style="font-family:vazir; color:#0099cc;">Welcome to the Answer Generator Repository!</h1>
+# 📚 Hot Rolled Steel Analysis Repository
 
 ---
 
-<h2 align="center" style="color:#ff5733;">🎯 Purpose</h2>
+## 🌟 Welcome to the Repository
 
-<p align="justify" style="line-height:1.8; font-family:vazir; font-size:16px;">
-This repository provides a comprehensive solution for creating and managing results from your data analysis notebooks. It includes features like generating a final <code>result.zip</code> file and maintaining a clean, organized workflow for statistical and data-driven tasks.
-</p>
+This repository provides a detailed analysis framework for understanding and optimizing the processes involved in the hot rolling steel industry. It includes data handling, insights extraction, and advanced analytics for sales, waste management, and customer behavior.
 
 ---
 
-<h2 align="center" style="color:#28a745;">📁 File Structure</h2>
+## 📂 Dataset Information
 
-```plaintext
-├── notebooks/
-│   ├── data_analysis.ipynb   # Main notebook for data analysis
-│   ├── helper_scripts.py     # Helper functions
-├── data/
-│   ├── dataset.csv           # Raw dataset used for analysis
-├── results/
-│   ├── result.zip            # Generated final results
-└── README.md                 # Project overview and details
-```
+You can download the datasets for this exercise from:
+- [Steel Dataset](https://docs.google.com/spreadsheets/d/1WHi8Btw9YCuF0vbkBgphPoWb1rmxyZkA/edit?usp=drive_link)
+- [Dimdate Dataset](https://docs.google.com/spreadsheets/d/1MdzmRdPKIAZMPu3XlnognXFPf8t6_XPa/edit?usp=drive_link)
 
 ---
 
-<h2 align="center" style="color:#007bff;">🚀 Getting Started</h2>
+## 🔍 Overview of Hot Rolled Steel
 
-<p align="justify" style="line-height:1.8; font-family:vazir; font-size:16px;">
-To get started with this project, follow the steps below:
-</p>
+Hot rolled steel refers to steel that has been rolled at very high temperatures (above 1700°F), exceeding the recrystallization temperature for most types of steel. This process makes it easier to shape the steel, resulting in products with a wider variety of appearances.
 
-### Prerequisites
+A hot rolling steel company, due to market conditions, diverse sales, and high sales volume, requires dynamic and diverse reports. Generally, the production and sales process works as follows:
+- Steel billets enter the system.
+- They undergo rolling.
+- Rolled sections are delivered to customers.
 
-- Python 3.8+
-- Required libraries (install using `pip install -r requirements.txt`):
-  - Pandas
-  - NumPy
-  - Matplotlib
-  - Scikit-learn
-
-### Installation
-
-```bash
-# Clone the repository
-$ git clone https://github.com/yourusername/answer-generator.git
-
-# Navigate to the project directory
-$ cd answer-generator
-
-# Install dependencies
-$ pip install -r requirements.txt
-```
+### Key Details:
+- Customers place orders in bundles, but sales are based on tonnage.
+- The cost is calculated per kilogram.
+- Each bundle corresponds to a billet weighing 2 tons, though not fully utilized during production.
+- Waste is the difference between the bundle weight and the sales tonnage.
 
 ---
 
-<h2 align="center" style="color:#6f42c1;">🔧 Usage</h2>
+## 📊 Data Structure
 
-<p align="justify" style="line-height:1.8; font-family:vazir; font-size:16px;">
-Follow these steps to generate your results:
-</p>
+### **Transaction Table**
 
-1. Open the main notebook in the <code>notebooks/</code> directory.
-2. Run all cells to perform data analysis and generate the final result.
-3. Execute the "Answer Generator Cell" at the end of the notebook to create the <code>result.zip</code> file.
+| Column Name       | Description                                                    |
+|-------------------|----------------------------------------------------------------|
+| Transaction_ID    | Transaction identifier                                        |
+| Product_ID        | Product identifier                                            |
+| Export            | Indicates export or domestic consumption                      |
+| Industry          | Type of customer industry                                     |
+| City_Category     | Location category relative to customer head office province   |
+| Stay_In_Customer  | Days customer’s order stayed at the factory                  |
+| Material_Status   | Inventory or production supply status                         |
+| Payment           | Order payment amount in rials                                 |
+| Unit_Price        | Price per kilogram in rials                                   |
+| Save_Date_Time    | Order registration time in Persian calendar                   |
+| Send_Date         | Shipping date in Gregorian calendar                           |
+| Customer_ID       | Customer code                                                 |
+| Bandel            | Bundles ordered (each bundle equals 2 ± 0.05 tons)           |
+| Real_Weight       | Actual weight sold                                            |
 
----
+### **Customer Table**
 
-<h2 align="center" style="color:#e83e8c;">💡 Features</h2>
+| Column Name       | Description                                                    |
+|-------------------|----------------------------------------------------------------|
+| Customer_ID       | Customer identifier                                           |
+| Province          | Name of the province                                         |
+| City_Category     | Location category relative to customer head office province   |
+| Stay_In_Customer  | Days customer’s order stayed at the factory                  |
+| Export/Import     | Indicates export or domestic consumption                      |
+| Industry_Cod      | Industry code                                                 |
 
-- **Statistical Analysis**: Quartile classification and insights.
-- **Data Aggregation**: Summary reports for industries, customer behaviors, and city-wise performance.
-- **Automated Result Generation**: Create compressed result files for further use.
+### Industry Code Classification:
+- **0-4**: Construction
+- **5-9**: Machining
+- **10-13**: Riveting
+- **14-17**: Drawing
+- **18-20**: Welding
 
----
+### **Dimdate Table**
 
-<h2 align="center" style="color:#fd7e14;">📊 Example Outputs</h2>
-
-<p align="center">
-  <img src="https://via.placeholder.com/800x400?text=Data+Analysis+Visualization" alt="Example Visualization" />
-</p>
-
----
-
-<h2 align="center" style="color:#17a2b8;">🤝 Contribution</h2>
-
-<p align="justify" style="line-height:1.8; font-family:vazir; font-size:16px;">
-We welcome contributions to improve this project! If you have ideas or fixes, feel free to fork the repository, make your changes, and submit a pull request.
-</p>
-
-### Steps to Contribute
-
-1. Fork the repository.
-2. Create a new branch.
-3. Make your changes.
-4. Submit a pull request.
-
----
-
-<h2 align="center" style="color:#dc3545;">🛠 Support</h2>
-
-<p align="justify" style="line-height:1.8; font-family:vazir; font-size:16px;">
-If you encounter any issues or have questions, please feel free to open an issue in this repository. We're here to help!
-</p>
+A helper table to convert Gregorian dates to Persian (Solar Hijri) dates and vice versa. It includes:
+- Day, Month, Year
+- Month name, Day of the week
+- Week number of the year
+- Covers years 1320 to 1429 in the Persian calendar.
 
 ---
 
-<h2 align="center" style="color:#ffc107;">🌟 Show Your Support</h2>
+## 🚀 Data Preprocessing Steps
 
-<p align="justify" style="line-height:1.8; font-family:vazir; font-size:16px;">
-If you like this project, please consider giving it a ⭐ on GitHub. Your support means a lot to us and helps this project grow!
-</p>
+1. **Column Selection**:
+   - Retain these columns in the final dataframe:
+     `Transaction_ID`, `Export`, `Industry`, `City_Category`, `Payment`, `Customer_ID`, `Bandel`, `Real_Weight`, `Province`, `Industry_Cod`, `Waste`, `Year`, `Month`, `Type`, `Class`.
+
+2. **New Columns**:
+   - Add a column for `Waste`.
+   - Convert `Bandel` to kilograms.
+
+3. **Date Conversion**:
+   - Add a `Miladi` column for Gregorian dates from `Save_Date_Time`.
+   - Extract `Year` and `Month` from `Miladi`, then delete `Miladi`.
+
+4. **Product_ID Split**:
+   - Split `Product_ID` into `Type` and `Class` columns.
+
+5. **Payment Scaling**:
+   - Convert `Payment` from rials to billions of tomans.
 
 ---
 
-<h2 align="center" style="color:#20c997;">🔗 Links</h2>
+## 📌 Analytical Questions
 
-- [Documentation](https://github.com/yourusername/answer-generator/docs)
-- [Issues](https://github.com/yourusername/answer-generator/issues)
-- [Pull Requests](https://github.com/yourusername/answer-generator/pulls)
+1. **Yearly and Monthly Sales**:
+   - Determine sales for imports and exports for each year and month.
+   - Use `Year` and `Month` as dataframe indexes.
+
+2. **Top Customers**:
+   - Identify the top 10 customers by purchase volume, number of purchases, and total waste.
+   - Sort by total sales in descending order.
+
+3. **Industry Insights**:
+   - Analyze sales, waste, and number of sales for each industry (`Machining`, `Welding`, `Construction`, `Riveting`, `Drawing`) by `Type` and `Class`.
+
+4. **Province Analysis**:
+   - Calculate total purchases, number of purchases, and total waste for each province per year.
+
+5. **Product Form Analysis**:
+   - Determine total kilograms produced for each `City_Category`, categorized by `Type` (straight vs. coil) and `Class`.
+
+6. **Quartile Analysis**:
+   - Categorize prices into `Low`, `Med`, and `High` based on quartiles (`Q1`, `Q2`, `Q3`).
+   - Add a `PriceLevel` column.
+
+7. **Industry Filter**:
+   - Filter data for industries with more than 50,000 sales and store in `Indfilter`.
+
+8. **Waste Analysis**:
+   - Report the average waste for the construction industry in 2020 for purchases with high prices, normalized by bundles.
 
 ---
 
-<h3 align="center" style="font-family:vazir; color:#6c757d;">Thank you for visiting the Answer Generator Repository! 🚀</h3>
+## 🛠 Contribution
+
+Feel free to fork this repository, suggest improvements, or raise issues. Collaboration is always welcome!
+
+---
+
+## 🌟 Acknowledgments
+
+Thank you for exploring this repository. We hope it provides valuable insights and tools for your analysis. Please star ⭐ this project if you find it helpful!
