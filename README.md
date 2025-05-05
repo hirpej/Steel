@@ -1,4 +1,4 @@
-# 🌟 **Food Packaging and Distribution**
+# 🌟 **Waste & Pricing Analytics for Supply Chain Efficiency**
 
 <h2 align="center" style="color:#FF6347; font-family:Arial;">Dynamic Insights for Efficient Food Packaging and Distribution</h2>
 
